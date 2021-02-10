@@ -27,24 +27,6 @@ Git is a free and open source distributed version control system designed to han
 |Undo modifications (restore files from latest commited version)|`git checkout -- index.html`|
 |Restore file from a custom commit (in current branch)|`git checkout 6eb715d -- index.html`|
 
-## Reset
-| Description | Command | 
-|--|--|
-|Go back to commit|`git revert 073791e7dd71b90daa853b2c5acc2c925f02dbc6`|
-|Soft reset (move HEAD only; neither staging nor working dir is changed)|`git reset --soft 073791e7dd71b90daa853b2c5acc2c925f02dbc6`|
-|Undo latest commit |`git reset --soft HEAD~ `|
-|Mixed reset (move HEAD and change staging to match repo; does not affect working dir)|`git reset --mixed 073791e7dd71b90daa853b2c5acc2c925f02dbc6`|
-|Hard reset (move HEAD and change staging dir and working dir to match repo)|`git reset --hard 073791e7dd71b90daa853b2c5acc2c925f02dbc6`|
-|Hard reset of a single file (`@` is short for `HEAD`)|`git checkout @ -- index.html`|
-
-## Update & Delete
-| Description | Command | 
-|--|--|
-|Test-Delete untracked files|`git clean -n`|
-|Delete untracked files (not staging)|`git clean -f`|
-|Unstage (undo adds)|`git reset HEAD index.html`|
-|Update most recent commit (also update the commit message)|`git commit --amend -m "New Message"`|
-
 ## Branch
 | Description | Command | 
 |--|--|
@@ -57,44 +39,6 @@ Git is a free and open source distributed version control system designed to han
 |Delete merged branch (only possible if not HEAD)|`git branch -d branchname` or  `git branch --delete branchname`|
 |Delete not merged branch|`git branch -D branch_to_delete`|
 
-## Merge
-| Description | Command | 
-|--|--|
-|True merge (fast forward)|`git merge branchname`|
-|Merge to master (only if fast forward)|`git merge --ff-only branchname`|
-|Merge to master (force a new commit)|`git merge --no-ff branchname`|
-|Stop merge (in case of conflicts)|`git merge --abort`|
-|Stop merge (in case of conflicts)|`git reset --merge` // prior to v1.7.4|
-|Undo local merge that hasn't been pushed yet|`git reset --hard origin/master`|
-|Merge only one specific commit |`git cherry-pick 073791e7`|
-|Rebase|`git checkout branchname` » `git rebase master` or  `git merge master branchname`
-(The rebase moves all of the commits in `master` onto the tip of `branchname`.)|
-|Cancel rebase|`git rebase --abort`|
-|Squash multiple commits into one|`git rebase -i HEAD~3` ([source](https//www.devroom.io/2011/07/05/git-squash-your-latests-commits-into-one/))|
-|Squash-merge a feature branch (as one commit)|`git merge --squash branchname` (commit afterwards)|
-
-## Stash
-| Description | Command | 
-|--|--|
-|Put in stash|`git stash save "Message"`|
-|Show stash|`git stash list`|
-|Show stash stats|`git stash show stash@{0}`|
-|Show stash changes|`git stash show -p stash@{0}`|
-|Use custom stash item and drop it|`git stash pop stash@{0}`|
-|Use custom stash item and do not drop it|`git stash apply stash@{0}`|
-|Use custom stash item and index|`git stash apply --index`|
-|Create branch from stash |`git stash branch new_branch`|
-|Delete custom stash item|`git stash drop stash@{0}`|
-|Delete complete stash|`git stash clear`|
-
-## Gitignore & Gitkeep
-| Description | Command | 
-|--|--|
-|Add or edit gitignore |`nano .gitignore`|
-|Track empty dir |`touch dir/.gitkeep`|
-
-[About .git ignore](https://docs.github.com/en/github/using-git/ignoring-files)  
-[Useful templates](https://github.com/github/gitignore)
 ## Log
 | Description | Command | 
 |--|--|
@@ -127,6 +71,54 @@ Git is a free and open source distributed version control system designed to han
 |Compare without caring about all spaces|`git diff -w 6eb715d..HEAD` or `git diff --ignore-all-space 6eb715d..HEAD`|
 |Useful comparings|`git diff --stat --summary 6eb715d..HEAD`|
 |Blame|`git blame -L10,+1 index.html` |
+
+## Merge
+| Description | Command | 
+|--|--|
+|True merge (fast forward)|`git merge branchname`|
+|Merge to master (only if fast forward)|`git merge --ff-only branchname`|
+|Merge to master (force a new commit)|`git merge --no-ff branchname`|
+|Stop merge (in case of conflicts)|`git merge --abort`|
+|Stop merge (in case of conflicts)|`git reset --merge` // prior to v1.7.4|
+|Undo local merge that hasn't been pushed yet|`git reset --hard origin/master`|
+|Merge only one specific commit |`git cherry-pick 073791e7`|
+|Rebase|`git checkout branchname` » `git rebase master` or  `git merge master branchname`
+(The rebase moves all of the commits in `master` onto the tip of `branchname`.)|
+|Cancel rebase|`git rebase --abort`|
+|Squash multiple commits into one|`git rebase -i HEAD~3` ([source](https//www.devroom.io/2011/07/05/git-squash-your-latests-commits-into-one/))|
+|Squash-merge a feature branch (as one commit)|`git merge --squash branchname` (commit afterwards)|
+
+## Reset
+| Description | Command | 
+|--|--|
+|Go back to commit|`git revert 073791e7dd71b90daa853b2c5acc2c925f02dbc6`|
+|Soft reset (move HEAD only; neither staging nor working dir is changed)|`git reset --soft 073791e7dd71b90daa853b2c5acc2c925f02dbc6`|
+|Undo latest commit |`git reset --soft HEAD~ `|
+|Mixed reset (move HEAD and change staging to match repo; does not affect working dir)|`git reset --mixed 073791e7dd71b90daa853b2c5acc2c925f02dbc6`|
+|Hard reset (move HEAD and change staging dir and working dir to match repo)|`git reset --hard 073791e7dd71b90daa853b2c5acc2c925f02dbc6`|
+|Hard reset of a single file (`@` is short for `HEAD`)|`git checkout @ -- index.html`|
+
+## Update & Delete
+| Description | Command | 
+|--|--|
+|Test-Delete untracked files|`git clean -n`|
+|Delete untracked files (not staging)|`git clean -f`|
+|Unstage (undo adds)|`git reset HEAD index.html`|
+|Update most recent commit (also update the commit message)|`git commit --amend -m "New Message"`|
+
+## Stash
+| Description | Command | 
+|--|--|
+|Put in stash|`git stash save "Message"`|
+|Show stash|`git stash list`|
+|Show stash stats|`git stash show stash@{0}`|
+|Show stash changes|`git stash show -p stash@{0}`|
+|Use custom stash item and drop it|`git stash pop stash@{0}`|
+|Use custom stash item and do not drop it|`git stash apply stash@{0}`|
+|Use custom stash item and index|`git stash apply --index`|
+|Create branch from stash |`git stash branch new_branch`|
+|Delete custom stash item|`git stash drop stash@{0}`|
+|Delete complete stash|`git stash clear`|
 
 ## Releases & Version Tags
 | Description | Command | 
@@ -169,6 +161,15 @@ Git is a free and open source distributed version control system designed to han
 |--|--|
 |Create a zip-archive |`git archive --format zip --output filename.zip master`|
 |Export/write custom log to a file |`git log --author=sven --all > log.txt`|
+
+## Gitignore & Gitkeep
+| Description | Command | 
+|--|--|
+|Add or edit gitignore |`nano .gitignore`|
+|Track empty dir |`touch dir/.gitkeep`|
+
+[About .git ignore](https://docs.github.com/en/github/using-git/ignoring-files)  
+[Useful templates](https://github.com/github/gitignore)
 
 ## Large File Storage
 Website https//git-lfs.github.com/
